@@ -1,4 +1,5 @@
-import { Application, Router, Context, Next } from 'oak';
+
+import { Application, Router, Context } from 'oak';
 import { cors } from './lib/cors.mts';
 import { apiKeyChecker } from './lib/api-key.mts';
 
@@ -89,32 +90,3 @@ app.use(apiKeyChecker);
 app.use(router.routes());
 
 await app.listen({ port });
-
-// Deno.serve(async (_request: Request) => {
-//   const 
-//   username = 'user_User.',
-//   password = await PasswordDigest.build('Aa9$Aa9$'),
-//   user = new User(username, password),
-//   userKv = user.toKv(),
-//   userId = await user.getId();
-
-//   // set
-//   await kv.set(['user', userId], userKv);
-
-//   // get
-//   const
-//   idToRead = await User.idFromUsername(username),
-//   value = await kv.get(['user', idToRead]),
-//   user2 = User.fromKv((value.value as unknown) as UserKv),
-//   userId2 = await user2.getId(),
-//   urn = await user2.getUrn()
-//   ;
-//   console.debug(value.value);
-
-//   return new Response(`
-//     username: ${username}
-//     id: ${userId2}
-//     urn: ${urn}
-//     value read:
-//       ${JSON.stringify(value.value as UserKv)}!`);
-// });

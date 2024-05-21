@@ -3,7 +3,10 @@ import type { PasswordDigestKv } from "./password-digest.mts";
 import { Timestamps } from "./timestamps.mts";
 import type { TimestampsKv } from "./timestamps.mts";
 
-import {HashFunction, digestText} from './digest.mts';
+import {
+  // HashFunction, 
+  digestText
+} from './digest.mts';
 
 
 type UserKv = {
