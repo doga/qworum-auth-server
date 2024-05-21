@@ -1,7 +1,7 @@
 
 import { Application, Router, Context } from 'oak';
-import { cors } from './lib/cors.mts';
-import { apiKeyChecker } from './lib/api-key.mts';
+import { cors } from './lib/middleware/cors.mts';
+import { apiKeyChecker } from './lib/middleware/api-key.mts';
 
 import { PasswordDigest } from "./lib/password-digest.mts";
 // import type { PasswordDigestKv } from "./lib/password-digest.mts";

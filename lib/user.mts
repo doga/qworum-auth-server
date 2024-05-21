@@ -6,7 +6,7 @@ import type { TimestampsKv } from "./timestamps.mts";
 import {
   // HashFunction, 
   digestText
-} from './digest.mts';
+} from './util/digest.mts';
 
 
 type UserKv = {

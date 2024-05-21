@@ -1,4 +1,4 @@
-import {HashFunction, digestText} from './digest.mts';
+import {HashFunction, digestText} from './util/digest.mts';
 
 type PasswordDigestKv = {
   digest: string,
