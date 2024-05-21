@@ -1,0 +1,17 @@
+{
+  "tasks": {
+    "serve": "deno run --unstable-kv --allow-env --allow-net --allow-read ./main.ts",
+    "deploy": "deployctl deploy --project=qworum-auth-server"
+  },
+  "imports": {
+    "oak": "https://deno.land/x/oak@v16.0.0/mod.ts"
+  },
+  "deploy": {
+    "project": "d185af97-a777-4e3b-9eea-ccc1d19c75dd",
+    "exclude": [
+      "**/node_modules"
+    ],
+    "include": [],
+    "entrypoint": "main.ts"
+  }
+}
