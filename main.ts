@@ -1,4 +1,5 @@
 import { Application, Router, Context, Next } from 'oak';
+import { corsMiddleware } from './lib/cors.mts';
 
 import { PasswordDigest } from "./lib/password-digest.mts";
 // import type { PasswordDigestKv } from "./lib/password-digest.mts";
@@ -105,6 +106,7 @@ router = new Router()
   }
 });
 
+app.use(corsMiddleware);
 app.use(apiKeyChecker);
 
 app.use(router.routes());
