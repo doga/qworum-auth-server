@@ -1,5 +1,6 @@
 import { Application, Router, Context, Next } from 'oak';
-import { corsMiddleware } from './lib/cors.mts';
+import { cors } from './lib/cors.mts';
+import { apiKeyChecker } from './lib/api-key.mts';
 
 import { PasswordDigest } from "./lib/password-digest.mts";
 // import type { PasswordDigestKv } from "./lib/password-digest.mts";
@@ -25,30 +26,6 @@ const
 port = parseInt(Deno.env.get('PORT') || '3000'),
 kv = await Deno.openKv(),
 app = new Application(),
-
-apiKeyChecker = async (ctx: Context, next: Next) => {
-  try {
-    const apiKey = Deno.env.get('API_KEY');
-    if(!apiKey){
-      await next(); return;
-    }
-
-    const authorization = ctx.request.headers.get('Authorization');
-    if(!authorization)throw new Error('Missing Authorization header');
-
-    const
-    bearerAuthRe = /^\s*Bearer\s+(?<apiKey>\S+)\s*$/,
-    match = authorization.match(bearerAuthRe);
-    
-    if(!match)throw new Error('Missing API key');
-    if(match?.groups?.apiKey !== apiKey)throw new Error('API keys do not match');
-
-    await next();
-  } catch (error) {
-    ctx.response.status = 401;
-    ctx.response.body = { message: `Unauthorized request: ${error}` };
-  }
-},
 
 router = new Router()
 .post("/sign-up", async (ctx: Context) => {
@@ -106,7 +83,7 @@ router = new Router()
   }
 });
 
-app.use(corsMiddleware);
+app.use(cors);
 app.use(apiKeyChecker);
 
 app.use(router.routes());
