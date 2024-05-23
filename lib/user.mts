@@ -26,10 +26,13 @@ class User {
   static usernameRegex = /^(?![_.])(?!.*[_.]{2})[A-Za-z0-9._]{3,30}$/;
 
   static fromKv(value: UserKv): User {
+    const timestamps = Timestamps.fromKv(value.timestamps);
+    timestamps.access();
+
     return new User(
       value.username,
       PasswordDigest.fromKv(value.passwordDigest),
-      Timestamps.fromKv(value.timestamps),
+      timestamps
     );
   }
 
@@ -51,7 +54,11 @@ class User {
   get username():string {return this.#username;}
   get passwordDigest():PasswordDigest {return this.#passwordDigest;}
   get timestamps():Timestamps {return this.#timestamps;}
-
+  set passwordDigest(newValue: PasswordDigest) {
+    this.#passwordDigest = newValue;
+    this.timestamps.update();
+  }
+  
   async getId(){
     return await digestText(this.#username);
   }

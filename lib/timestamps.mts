@@ -11,7 +11,7 @@ class Timestamps {
     timestamps.accessed = new Date(value.accessed);
     return timestamps;
   }
-  #created: Date;
+  #created: Date; // TODO ensure that created <= updated <= accessed
   #updated: Date;
   #accessed: Date;
 
@@ -28,6 +28,16 @@ class Timestamps {
   get created():Date {return this.#created}
   get updated():Date {return this.#updated}
   get accessed():Date {return this.#accessed}
+
+  access(){
+    this.#accessed = new Date();
+  }
+
+  update(){
+    const date = new Date();
+    this.#updated = date;
+    this.#accessed = date;
+  }
 
   toKv():TimestampsKv {
     return {
