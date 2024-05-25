@@ -77,7 +77,8 @@ router = new Router()
     user = User.fromKv(userKv.value as UserKv),
     passwordDigest = await PasswordDigest.build(password, user.passwordDigest.hashFunction);
     
-    if(user.passwordDigest.digest !== (await passwordDigest).digest)throw new TypeError("passwords don't match");
+    // if(user.passwordDigest.digest !== (await passwordDigest).digest)throw new TypeError("passwords don't match");
+    if(!user.passwordDigest.equals(passwordDigest))throw new TypeError("passwords don't match");
 
     // update the db
     user.timestamps.access();
